@@ -11,7 +11,7 @@
 ## Step 2: Configure Custom Domain
 
 1. In the same **Pages** settings, under **Custom domain**:
-   - Enter: `whois-list.org`
+   - Enter: `whoislist.org`
    - Click **Save**
 2. Wait for DNS check (may take a few minutes)
 3. ✅ Enable **Enforce HTTPS** (after DNS propagates)
@@ -20,7 +20,7 @@
 
 Add these records at your DNS provider (e.g., Cloudflare, Namecheap, GoDaddy):
 
-### A Records (apex domain - whois-list.org)
+### A Records (apex domain - whoislist.org)
 
 ```
 Type: A
@@ -44,13 +44,13 @@ Value: 185.199.111.153
 TTL: Auto or 3600
 ```
 
-### CNAME Record (www subdomain - www.whois-list.org)
+### CNAME Record (www subdomain - www.whoislist.org)
 
 **Option 1: Point www to apex domain** (recommended)
 ```
 Type: CNAME
 Name: www
-Value: whois-list.org
+Value: whoislist.org
 TTL: Auto or 3600
 ```
 
@@ -68,17 +68,17 @@ TTL: Auto or 3600
 
 After DNS propagates (5-30 minutes):
 
-1. **Test apex domain**: https://whois-list.org
-2. **Test www subdomain**: https://www.whois-list.org (should redirect to apex)
-3. **Test primary endpoint**: https://whois-list.org/whois_servers.json
-4. **Test alternative endpoint**: https://whois-list.org/data.json
+1. **Test apex domain**: https://whoislist.org
+2. **Test www subdomain**: https://www.whoislist.org (should redirect to apex)
+3. **Test primary endpoint**: https://whoislist.org/whois_servers.json
+4. **Test alternative endpoint**: https://whoislist.org/data.json
 5. **Test HTTPS**: Ensure the lock icon shows in browser
 
 ## 🎯 What Users Will Get
 
 ### Landing Page
-- `https://whois-list.org` → Beautiful landing page
-- `https://www.whois-list.org` → Redirects to apex domain
+- `https://whoislist.org` → Beautiful landing page
+- `https://www.whoislist.org` → Redirects to apex domain
 
 Features:
 - API endpoints with copy buttons
@@ -87,9 +87,9 @@ Features:
 - Links to GitHub
 
 ### Direct JSON Access (Multiple Endpoints)
-- `https://whois-list.org/whois_servers.json` → Raw JSON data
-- `https://whois-list.org/data.json` → Same data (alternative endpoint)
-- `https://www.whois-list.org/whois_servers.json` → Works via www too
+- `https://whoislist.org/whois_servers.json` → Raw JSON data
+- `https://whoislist.org/data.json` → Same data (alternative endpoint)
+- `https://www.whoislist.org/whois_servers.json` → Works via www too
 
 ### GitHub Documentation
 `https://github.com/simplebytes-com/whois-server-list` → Full docs
@@ -99,8 +99,8 @@ Features:
 ### DNS Not Propagating
 ```bash
 # Check DNS propagation
-dig whois-list.org
-nslookup whois-list.org
+dig whoislist.org
+nslookup whoislist.org
 
 # Should show GitHub Pages IPs (185.199.108-111.153)
 ```

@@ -11,11 +11,13 @@
 
 ### Direct JSON URLs (for API/GET requests):
 
-**Primary endpoints** (via whois-list.org):
+**Primary endpoints** (via whoislist.org):
 ```
-https://whois-list.org/whois_servers.json
-https://whois-list.org/data.json
+https://whoislist.org/whois_servers.json
+https://whoislist.org/data.json
 ```
+
+*Note: Also available at whois-list.org (alternative domain)*
 
 **GitHub Raw URL** (alternative):
 ```
@@ -25,21 +27,21 @@ https://raw.githubusercontent.com/simplebytes-com/whois-server-list/main/whois_s
 ### Usage:
 ```bash
 # cURL (recommended - custom domain)
-curl https://whois-list.org/whois_servers.json
+curl https://whoislist.org/whois_servers.json
 
 # cURL (alternative endpoint)
-curl https://whois-list.org/data.json
+curl https://whoislist.org/data.json
 
 # cURL (GitHub raw)
 curl https://raw.githubusercontent.com/simplebytes-com/whois-server-list/main/whois_servers.json
 
 # JavaScript/Node.js
-const response = await fetch('https://whois-list.org/whois_servers.json');
+const response = await fetch('https://whoislist.org/whois_servers.json');
 const whoisServers = await response.json();
 
 # Python
 import requests
-whois_servers = requests.get('https://whois-list.org/whois_servers.json').json()
+whois_servers = requests.get('https://whoislist.org/whois_servers.json').json()
 ```
 
 ## 📊 What's Included
@@ -47,7 +49,7 @@ whois_servers = requests.get('https://whois-list.org/whois_servers.json').json()
 - **1,260+ TLD WHOIS Servers** - Covers all major generic and country-code TLDs
 - **Auto-Updated** - Syncs with IANA twice weekly (Tuesday & Friday at 2 AM UTC)
 - **JSON Format** - Easy to parse and integrate
-- **Production Ready** - Used by [DomainDetails.com](https://domaindetails.com)
+- **Production Ready** - Used by [DomainDetails.com](https://domaindetails.com?ref=whoislist)
 
 ## 📋 Data Format
 
@@ -114,7 +116,7 @@ This repository provides data for:
 ## 📖 Related Projects
 
 - [whois-parser](https://github.com/simplebytes-com/whois-parser) - Comprehensive WHOIS data parser
-- [DomainDetails.com](https://domaindetails.com) - Free domain lookup tool using this data
+- [DomainDetails.com](https://domaindetails.com?ref=whoislist) - Free domain lookup tool using this data
 
 ## 💻 Integration Examples
 
@@ -198,15 +200,15 @@ MIT License - Free to use in commercial and open-source projects
 
 This project is made possible by:
 
-- **[DomainDetails.com](https://domaindetails.com)** — Project Sponsor & Primary User
+- **[DomainDetails.com](https://domaindetails.com?ref=whoislist)** — Project Sponsor & Primary User
 - **[GitHub](https://github.com)** — Free hosting, GitHub Actions, and Pages
 - **[Cloudflare](https://www.cloudflare.com)** — Global CDN and DDoS protection
 
 ## 🌟 Credits
 
 - **Data Source**: [IANA Root Zone Database](https://www.iana.org/)
-- **Maintained By**: [Simple Bytes LLC](https://simplebytes.com)
-- **Built For**: [DomainDetails.com](https://domaindetails.com)
+- **Maintained By**: [Simple Bytes LLC](https://simplebytes.com?ref=whoislist)
+- **Built For**: [DomainDetails.com](https://domaindetails.com?ref=whoislist)
 
 ---
 

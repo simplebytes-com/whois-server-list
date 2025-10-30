@@ -17,7 +17,7 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
             color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #3b82f6 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -35,7 +35,7 @@
         }
 
         h1 {
-            color: #667eea;
+            color: #1e40af;
             margin-bottom: 10px;
             font-size: 32px;
         }
@@ -71,7 +71,7 @@
         .stat-value {
             font-size: 24px;
             font-weight: bold;
-            color: #667eea;
+            color: #1e40af;
             margin-top: 5px;
         }
 
@@ -80,7 +80,13 @@
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 20px;
-            border-left: 4px solid #667eea;
+            border-left: 4px solid #1e40af;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .endpoint-label {
@@ -102,8 +108,8 @@
             margin-bottom: 10px;
         }
 
-        .copy-btn {
-            background: #667eea;
+        .copy-btn, .view-btn {
+            background: #1e40af;
             color: white;
             border: none;
             padding: 8px 16px;
@@ -111,14 +117,24 @@
             cursor: pointer;
             font-size: 14px;
             transition: background 0.3s;
+            text-decoration: none;
+            display: inline-block;
         }
 
-        .copy-btn:hover {
-            background: #5568d3;
+        .copy-btn:hover, .view-btn:hover {
+            background: #1e3a8a;
         }
 
-        .copy-btn:active {
-            background: #4451b8;
+        .copy-btn:active, .view-btn:active {
+            background: #1e293b;
+        }
+
+        .view-btn {
+            background: #3b82f6;
+        }
+
+        .view-btn:hover {
+            background: #2563eb;
         }
 
         .examples {
@@ -158,7 +174,7 @@
         .link-btn {
             display: inline-block;
             padding: 10px 20px;
-            background: #667eea;
+            background: #1e40af;
             color: white;
             text-decoration: none;
             border-radius: 6px;
@@ -167,15 +183,15 @@
         }
 
         .link-btn:hover {
-            background: #5568d3;
+            background: #1e3a8a;
         }
 
         .link-btn.secondary {
-            background: #764ba2;
+            background: #3b82f6;
         }
 
         .link-btn.secondary:hover {
-            background: #653a8a;
+            background: #2563eb;
         }
 
         footer {
@@ -206,6 +222,10 @@
     <div class="container">
         <h1>🌐 WHOIS Server List</h1>
         <p class="subtitle">Complete JSON database of WHOIS servers for all TLDs</p>
+        <p style="font-size: 14px; color: #666; margin-bottom: 20px;">
+            📍 Primary domain: <strong style="color: #1e40af;">whoislist.org</strong>
+            <span style="color: #999;">• Also available at whois-list.org</span>
+        </p>
 
         <div class="stats">
             <div class="stat">
@@ -224,20 +244,29 @@
 
         <div class="endpoint">
             <div class="endpoint-label">📡 Primary API Endpoint</div>
-            <div class="endpoint-url" id="api-url">https://whois-list.org/whois_servers.json</div>
-            <button class="copy-btn" onclick="copyUrl('api')">Copy URL</button>
+            <div class="endpoint-url" id="api-url">https://whoislist.org/whois_servers.json</div>
+            <div class="button-group">
+                <button class="copy-btn" onclick="copyUrl('api')">Copy URL</button>
+                <a href="https://whoislist.org/whois_servers.json" target="_blank" class="view-btn">View</a>
+            </div>
         </div>
 
         <div class="endpoint">
             <div class="endpoint-label">📡 Alternative Endpoint (same data)</div>
-            <div class="endpoint-url" id="api-url-alt">https://whois-list.org/data.json</div>
-            <button class="copy-btn" onclick="copyUrl('api-alt')">Copy URL</button>
+            <div class="endpoint-url" id="api-url-alt">https://whoislist.org/data.json</div>
+            <div class="button-group">
+                <button class="copy-btn" onclick="copyUrl('api-alt')">Copy URL</button>
+                <a href="https://whoislist.org/data.json" target="_blank" class="view-btn">View</a>
+            </div>
         </div>
 
         <div class="endpoint">
             <div class="endpoint-label">🔗 GitHub Raw URL</div>
             <div class="endpoint-url" id="github-url">https://raw.githubusercontent.com/simplebytes-com/whois-server-list/main/whois_servers.json</div>
-            <button class="copy-btn" onclick="copyUrl('github')">Copy URL</button>
+            <div class="button-group">
+                <button class="copy-btn" onclick="copyUrl('github')">Copy URL</button>
+                <a href="https://raw.githubusercontent.com/simplebytes-com/whois-server-list/main/whois_servers.json" target="_blank" class="view-btn">View</a>
+            </div>
         </div>
 
         <div class="examples">
@@ -245,23 +274,26 @@
 
             <div class="example">
                 <div class="example-lang">cURL</div>
-                <code>curl https://whois-list.org/whois_servers.json</code>
+                <code>curl https://whoislist.org/whois_servers.json</code>
             </div>
 
             <div class="example">
                 <div class="example-lang">JavaScript</div>
-                <code>const servers = await fetch('https://whois-list.org/whois_servers.json').then(r => r.json());</code>
+                <code>const servers = await fetch('https://whoislist.org/whois_servers.json').then(r => r.json());</code>
             </div>
 
             <div class="example">
                 <div class="example-lang">Python</div>
-                <code>import requests<br>servers = requests.get('https://whois-list.org/whois_servers.json').json()</code>
+                <code>import requests<br>servers = requests.get('https://whoislist.org/whois_servers.json').json()</code>
             </div>
         </div>
 
         <div class="links">
             <a href="https://github.com/simplebytes-com/whois-server-list" class="link-btn" target="_blank">
-                📖 View Documentation
+                📖 GitHub Repository
+            </a>
+            <a href="https://github.com/simplebytes-com/whois-server-list#readme" class="link-btn" target="_blank">
+                📚 Documentation
             </a>
             <a href="whois_servers.json" class="link-btn secondary" download>
                 📥 Download JSON
@@ -273,24 +305,24 @@
                 <h4 style="margin-bottom: 15px; color: #333; font-size: 16px;">💜 Supported By</h4>
                 <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px;">
                     <div>
-                        <strong style="color: #667eea;">
-                            <a href="https://domaindetails.com" target="_blank" style="color: #667eea; text-decoration: none;">DomainDetails.com</a>
+                        <strong style="color: #1e40af;">
+                            <a href="https://domaindetails.com?ref=whoislist" target="_blank" style="color: #1e40af; text-decoration: none;">DomainDetails.com</a>
                         </strong> — Project Sponsor & Primary User
                     </div>
                     <div>
-                        <strong style="color: #667eea;">
-                            <a href="https://github.com" target="_blank" style="color: #667eea; text-decoration: none;">GitHub</a>
+                        <strong style="color: #1e40af;">
+                            <a href="https://github.com" target="_blank" style="color: #1e40af; text-decoration: none;">GitHub</a>
                         </strong> — Free hosting, GitHub Actions, and Pages
                     </div>
                     <div>
-                        <strong style="color: #667eea;">
-                            <a href="https://www.cloudflare.com" target="_blank" style="color: #667eea; text-decoration: none;">Cloudflare</a>
+                        <strong style="color: #1e40af;">
+                            <a href="https://www.cloudflare.com" target="_blank" style="color: #1e40af; text-decoration: none;">Cloudflare</a>
                         </strong> — Global CDN and DDoS protection
                     </div>
                 </div>
             </div>
-            <p>Auto-synced with <a href="https://www.iana.org/domains/root/db" target="_blank" style="color: #667eea;">IANA Root Zone Database</a></p>
-            <p style="margin-top: 10px;">Built by <a href="https://simplebytes.com" target="_blank" style="color: #667eea;">Simple Bytes LLC</a></p>
+            <p>Auto-synced with <a href="https://www.iana.org/domains/root/db" target="_blank" style="color: #1e40af;">IANA Root Zone Database</a></p>
+            <p style="margin-top: 10px;">Built by <a href="https://simplebytes.com?ref=whoislist" target="_blank" style="color: #1e40af;">Simple Bytes LLC</a></p>
         </footer>
     </div>
 
