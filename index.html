@@ -194,6 +194,85 @@
             background: #2563eb;
         }
 
+        .lookup-section {
+            margin-top: 40px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #1e40af;
+        }
+
+        .table-container {
+            max-height: 500px;
+            overflow-y: auto;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            background: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            position: sticky;
+            top: 0;
+            background: #f7f7f7;
+            z-index: 10;
+        }
+
+        th {
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e40af;
+            border-bottom: 2px solid #e5e7eb;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f3f4f6;
+            font-size: 14px;
+            font-family: 'Monaco', 'Menlo', monospace;
+        }
+
+        tr:hover {
+            background: #f9fafb;
+        }
+
+        .tld-cell {
+            font-weight: 600;
+            color: #1e40af;
+        }
+
+        .table-stats {
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .no-results {
+            padding: 40px;
+            text-align: center;
+            color: #999;
+        }
+
         footer {
             margin-top: 40px;
             padding-top: 20px;
@@ -288,6 +367,37 @@
             </div>
         </div>
 
+        <div class="lookup-section">
+            <h3 style="margin-bottom: 15px;">🔍 Browse WHOIS Servers</h3>
+            <input
+                type="text"
+                class="search-box"
+                id="searchBox"
+                placeholder="Search by TLD (e.g., com, org, io)..."
+                autocomplete="off"
+            >
+            <div class="table-stats" id="tableStats">
+                Loading...
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>TLD</th>
+                            <th>WHOIS Server</th>
+                        </tr>
+                    </thead>
+                    <tbody id="whoisTable">
+                        <tr>
+                            <td colspan="2" style="text-align: center; padding: 40px; color: #999;">
+                                Loading WHOIS servers...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <div class="links">
             <a href="https://github.com/simplebytes-com/whois-server-list" class="link-btn" target="_blank">
                 📖 GitHub Repository
@@ -327,15 +437,75 @@
     </div>
 
     <script>
-        // Load actual TLD count
+        let whoisData = {};
+        let filteredData = {};
+
+        // Load WHOIS servers data
         fetch('whois_servers.json')
             .then(r => r.json())
             .then(data => {
+                whoisData = data;
+                filteredData = data;
+
+                // Update TLD count
                 document.getElementById('tld-count').textContent = Object.keys(data).length.toLocaleString();
+
+                // Populate table
+                renderTable(data);
+                updateStats(data, data);
             })
             .catch(() => {
-                // Keep default if fetch fails
+                document.getElementById('whoisTable').innerHTML =
+                    '<tr><td colspan="2" class="no-results">Failed to load WHOIS servers</td></tr>';
+                document.getElementById('tableStats').textContent = 'Failed to load data';
             });
+
+        function renderTable(data) {
+            const tbody = document.getElementById('whoisTable');
+            const entries = Object.entries(data).sort((a, b) => a[0].localeCompare(b[0]));
+
+            if (entries.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="2" class="no-results">No results found</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = entries.map(([tld, server]) => `
+                <tr>
+                    <td class="tld-cell">.${tld}</td>
+                    <td>${server}</td>
+                </tr>
+            `).join('');
+        }
+
+        function updateStats(filtered, total) {
+            const filteredCount = Object.keys(filtered).length;
+            const totalCount = Object.keys(total).length;
+            const statsEl = document.getElementById('tableStats');
+
+            if (filteredCount === totalCount) {
+                statsEl.textContent = `Showing ${totalCount.toLocaleString()} WHOIS servers`;
+            } else {
+                statsEl.textContent = `Showing ${filteredCount.toLocaleString()} of ${totalCount.toLocaleString()} WHOIS servers`;
+            }
+        }
+
+        // Search functionality
+        document.getElementById('searchBox').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase().trim();
+
+            if (!searchTerm) {
+                filteredData = whoisData;
+            } else {
+                filteredData = Object.fromEntries(
+                    Object.entries(whoisData).filter(([tld, server]) =>
+                        tld.includes(searchTerm) || server.toLowerCase().includes(searchTerm)
+                    )
+                );
+            }
+
+            renderTable(filteredData);
+            updateStats(filteredData, whoisData);
+        });
 
         function copyUrl(type) {
             let url;
