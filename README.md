@@ -1,7 +1,7 @@
 # WHOIS Server List - Complete TLD WHOIS Servers JSON Database
 
 ![Last Updated](https://img.shields.io/badge/Last%20Updated-2025--10--30-blue)
-![TLDs](https://img.shields.io/badge/TLDs-1260+-green)
+![TLDs](https://img.shields.io/badge/TLDs-877+-green)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 ![Auto Sync](https://img.shields.io/badge/Auto%20Sync-2x%20Weekly-orange)
 
