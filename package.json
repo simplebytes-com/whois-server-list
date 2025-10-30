@@ -1,0 +1,43 @@
+{
+  "name": "whois-server-list",
+  "version": "1.0.0",
+  "description": "Complete JSON list of WHOIS servers for all TLDs - Auto-synced with IANA Root Zone Database",
+  "type": "module",
+  "main": "whois_servers.json",
+  "scripts": {
+    "sync": "node sync-iana.js",
+    "sync:dry-run": "node sync-iana.js --dry-run"
+  },
+  "keywords": [
+    "whois",
+    "whois-server",
+    "whois-servers",
+    "tld",
+    "gtld",
+    "cctld",
+    "domain",
+    "dns",
+    "iana",
+    "whois-list",
+    "whois-database",
+    "domain-lookup",
+    "registry",
+    "json"
+  ],
+  "author": "Simple Bytes LLC",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/simplebytes-com/whois-server-list.git"
+  },
+  "homepage": "https://github.com/simplebytes-com/whois-server-list#readme",
+  "bugs": {
+    "url": "https://github.com/simplebytes-com/whois-server-list/issues"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

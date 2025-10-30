@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Backups (keep local only, uploaded as artifacts)
+*.backup.*
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

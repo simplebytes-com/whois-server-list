@@ -1,0 +1,95 @@
+name: Sync WHOIS Servers from IANA
+
+on:
+  push:
+    branches: [ main, master ]
+  schedule:
+    # Run twice weekly: Tuesday at 2 AM UTC and Friday at 2 AM UTC
+    - cron: '0 2 * * 2'  # Tuesday
+    - cron: '0 2 * * 5'  # Friday
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run IANA sync
+        run: npm run sync
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if git diff --quiet whois_servers.json README.md; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "ℹ️ No changes detected"
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "✅ Changes detected in whois_servers.json or README.md"
+          fi
+
+      - name: Commit and push changes
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add whois_servers.json README.md
+          git commit -m "chore: auto-sync WHOIS servers from IANA [skip ci]
+
+          📥 Data updated from IANA Root Zone Database
+          🔄 Triggered by: ${{ github.event_name }}
+          📅 Date: $(date -u '+%Y-%m-%d %H:%M:%S UTC')
+
+          Source: https://data.iana.org/TLD/tlds-alpha-by-domain.txt"
+          git push
+
+      - name: Create backup artifact
+        if: steps.changes.outputs.changed == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: whois-servers-backup-${{ github.run_number }}
+          path: whois_servers.json.backup.*
+          retention-days: 30
+
+      - name: Generate summary
+        run: |
+          TOTAL_TLDS=$(jq 'length' whois_servers.json)
+
+          echo "# 📊 WHOIS Server List Sync Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ steps.changes.outputs.changed }}" == "true" ]; then
+            echo "## ✅ Successfully Updated" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "- **Total TLDs**: $TOTAL_TLDS" >> $GITHUB_STEP_SUMMARY
+            echo "- **Status**: Changes committed and pushed" >> $GITHUB_STEP_SUMMARY
+            echo "- **Trigger**: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### 🔗 Access Updated Data" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            echo "https://raw.githubusercontent.com/${{ github.repository }}/main/whois_servers.json" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+          else
+            echo "## ℹ️ No Updates Needed" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "- **Total TLDs**: $TOTAL_TLDS" >> $GITHUB_STEP_SUMMARY
+            echo "- **Status**: Already up-to-date with IANA" >> $GITHUB_STEP_SUMMARY
+            echo "- **Trigger**: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          fi
