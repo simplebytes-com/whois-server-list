@@ -194,11 +194,19 @@ Found an issue or have a suggestion?
 
 MIT License - Free to use in commercial and open-source projects
 
+## 💜 Supported By
+
+This project is made possible by:
+
+- **[DomainDetails.com](https://domaindetails.com)** — Project Sponsor & Primary User
+- **[GitHub](https://github.com)** — Free hosting, GitHub Actions, and Pages
+- **[Cloudflare](https://www.cloudflare.com)** — Global CDN and DDoS protection
+
 ## 🌟 Credits
 
 - **Data Source**: [IANA Root Zone Database](https://www.iana.org/)
 - **Maintained By**: [Simple Bytes LLC](https://simplebytes.com)
-- **Used By**: [DomainDetails.com](https://domaindetails.com)
+- **Built For**: [DomainDetails.com](https://domaindetails.com)
 
 ---
 
