@@ -18,56 +18,78 @@
 
 ## Step 3: DNS Configuration
 
-### A Records (point to GitHub Pages)
+Add these records at your DNS provider (e.g., Cloudflare, Namecheap, GoDaddy):
 
-Add these **A records** to your DNS provider:
+### A Records (apex domain - whois-list.org)
 
 ```
 Type: A
-Name: @
+Name: @  (or leave blank for apex domain)
 Value: 185.199.108.153
+TTL: Auto or 3600
 
 Type: A
 Name: @
 Value: 185.199.109.153
+TTL: Auto or 3600
 
 Type: A
 Name: @
 Value: 185.199.110.153
+TTL: Auto or 3600
 
 Type: A
 Name: @
 Value: 185.199.111.153
+TTL: Auto or 3600
 ```
 
-### CNAME Record (optional - for www subdomain)
+### CNAME Record (www subdomain - www.whois-list.org)
 
+**Option 1: Point www to apex domain** (recommended)
+```
+Type: CNAME
+Name: www
+Value: whois-list.org
+TTL: Auto or 3600
+```
+
+**Option 2: Point www directly to GitHub Pages**
 ```
 Type: CNAME
 Name: www
 Value: simplebytes-com.github.io
+TTL: Auto or 3600
 ```
+
+**Note**: Both options work. Option 1 is simpler and follows the apex domain automatically.
 
 ## Step 4: Verify
 
 After DNS propagates (5-30 minutes):
 
-1. **Test main domain**: https://whois-list.org
-2. **Test JSON endpoint**: https://whois-list.org/whois_servers.json
-3. **Test HTTPS**: Ensure the lock icon shows in browser
+1. **Test apex domain**: https://whois-list.org
+2. **Test www subdomain**: https://www.whois-list.org (should redirect to apex)
+3. **Test primary endpoint**: https://whois-list.org/whois_servers.json
+4. **Test alternative endpoint**: https://whois-list.org/data.json
+5. **Test HTTPS**: Ensure the lock icon shows in browser
 
 ## 🎯 What Users Will Get
 
 ### Landing Page
-`https://whois-list.org` → Beautiful landing page with:
-- API endpoint
-- Quick examples
-- Copy buttons
+- `https://whois-list.org` → Beautiful landing page
+- `https://www.whois-list.org` → Redirects to apex domain
+
+Features:
+- API endpoints with copy buttons
+- Quick examples (cURL, JavaScript, Python)
 - Download link
 - Links to GitHub
 
-### Direct JSON Access
-`https://whois-list.org/whois_servers.json` → Raw JSON data
+### Direct JSON Access (Multiple Endpoints)
+- `https://whois-list.org/whois_servers.json` → Raw JSON data
+- `https://whois-list.org/data.json` → Same data (alternative endpoint)
+- `https://www.whois-list.org/whois_servers.json` → Works via www too
 
 ### GitHub Documentation
 `https://github.com/simplebytes-com/whois-server-list` → Full docs

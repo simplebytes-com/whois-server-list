@@ -9,23 +9,37 @@
 
 ## 🚀 Quick Access
 
-### Direct JSON URL (for API/GET requests):
+### Direct JSON URLs (for API/GET requests):
+
+**Primary endpoints** (via whois-list.org):
+```
+https://whois-list.org/whois_servers.json
+https://whois-list.org/data.json
+```
+
+**GitHub Raw URL** (alternative):
 ```
 https://raw.githubusercontent.com/simplebytes-com/whois-server-list/main/whois_servers.json
 ```
 
 ### Usage:
 ```bash
-# cURL
+# cURL (recommended - custom domain)
+curl https://whois-list.org/whois_servers.json
+
+# cURL (alternative endpoint)
+curl https://whois-list.org/data.json
+
+# cURL (GitHub raw)
 curl https://raw.githubusercontent.com/simplebytes-com/whois-server-list/main/whois_servers.json
 
 # JavaScript/Node.js
-const response = await fetch('https://raw.githubusercontent.com/simplebytes-com/whois-server-list/main/whois_servers.json');
+const response = await fetch('https://whois-list.org/whois_servers.json');
 const whoisServers = await response.json();
 
 # Python
 import requests
-whois_servers = requests.get('https://raw.githubusercontent.com/simplebytes-com/whois-server-list/main/whois_servers.json').json()
+whois_servers = requests.get('https://whois-list.org/whois_servers.json').json()
 ```
 
 ## 📊 What's Included

@@ -223,13 +223,19 @@
         </div>
 
         <div class="endpoint">
-            <div class="endpoint-label">📡 API Endpoint (Direct Access)</div>
+            <div class="endpoint-label">📡 Primary API Endpoint</div>
             <div class="endpoint-url" id="api-url">https://whois-list.org/whois_servers.json</div>
             <button class="copy-btn" onclick="copyUrl('api')">Copy URL</button>
         </div>
 
         <div class="endpoint">
-            <div class="endpoint-label">🔗 GitHub Raw URL (Alternative)</div>
+            <div class="endpoint-label">📡 Alternative Endpoint (same data)</div>
+            <div class="endpoint-url" id="api-url-alt">https://whois-list.org/data.json</div>
+            <button class="copy-btn" onclick="copyUrl('api-alt')">Copy URL</button>
+        </div>
+
+        <div class="endpoint">
+            <div class="endpoint-label">🔗 GitHub Raw URL</div>
             <div class="endpoint-url" id="github-url">https://raw.githubusercontent.com/simplebytes-com/whois-server-list/main/whois_servers.json</div>
             <button class="copy-btn" onclick="copyUrl('github')">Copy URL</button>
         </div>
@@ -280,9 +286,14 @@
             });
 
         function copyUrl(type) {
-            const url = type === 'api'
-                ? document.getElementById('api-url').textContent
-                : document.getElementById('github-url').textContent;
+            let url;
+            if (type === 'api') {
+                url = document.getElementById('api-url').textContent;
+            } else if (type === 'api-alt') {
+                url = document.getElementById('api-url-alt').textContent;
+            } else {
+                url = document.getElementById('github-url').textContent;
+            }
 
             navigator.clipboard.writeText(url).then(() => {
                 const btn = event.target;

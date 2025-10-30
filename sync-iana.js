@@ -242,6 +242,10 @@ async function main() {
     await fs.writeFile('whois_servers.json', JSON.stringify(sortedDict, null, 2) + '\n');
     log('✓ Updated whois_servers.json', 'green');
 
+    // Also update data.json (alternative endpoint)
+    await fs.writeFile('data.json', JSON.stringify(sortedDict, null, 2) + '\n');
+    log('✓ Updated data.json', 'green');
+
     // Update README badges
     await updateReadmeBadges(stats.withWhois, formatDate());
     log('✓ Updated README.md badges', 'green');
